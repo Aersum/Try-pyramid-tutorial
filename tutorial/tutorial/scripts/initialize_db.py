@@ -12,8 +12,20 @@ def setup_models(dbsession):
     Add or update models / fixtures in the database.
 
     """
-    model = models.mymodel.MyModel(name='one', value=1)
-    dbsession.add(model)
+    editor = models.User(name='editor', role='editor')
+    editor.set_password('editor')
+    dbsession.add(editor)
+
+    basic = models.User(name='basic', role='basic')
+    basic.set_password('basic')
+    dbsession.add(basic)
+
+    page = models.Page(
+        name='FrontPage',
+        creator=editor,
+        data='This is the front page',
+    )
+    dbsession.add(page)
 
 
 def parse_args(argv):
